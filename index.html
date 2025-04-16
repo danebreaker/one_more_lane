@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One More Lane Sim</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <script src="app.js"></script>
+  </head>
+  <body onload="pageSetup()">
+    <div class="columns m-4">
+      <div id="left_col" class="column is-one-third box m-3 p-4">
+        <div>
+          <h2 class="is-size-3">Highway Details</h2>
+          <p>Bank: <span id="bank">0</span></p>
+          <p>Number of Lanes: <span id="num_lanes"></span></p>
+          <p>Efficiency: <span id="efficiency"></span></p>
+        </div>
+
+        <div>
+          <h2 class="is-size-3">Shop</h2>
+
+          <div>
+            <p>New Lane Cost: <span id="new_lane_cost"></span></p>
+            <button id="buy_lane" class="button" onclick="buy_new_lane()">New Lane</button>
+          </div>
+
+          <div>
+            <p>Efficiency Increase Cost: <span id="efficiency_inc_cost"></span></p>
+            <button id="efficiency_inc" class="button" onclick="increase_efficiency()">Increase Efficiency</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="right_col" class="column box m-3 p-4">
+        <div>
+          <h2 class="is-size-3">Lane Info</h2>
+
+          <div id="lanes" class="grid"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
