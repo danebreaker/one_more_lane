@@ -1,0 +1,919 @@
+/* Custom Highway & Roguelike Balatro-Style Stylesheet for One More Lane */
+
+:root {
+  --bg-dark: #0a0e17;
+  --bg-card: #131b2e;
+  --panel-bg: rgba(18, 26, 43, 0.9);
+  --panel-border: rgba(59, 130, 246, 0.25);
+  --highway-yellow: #f59e0b;
+  --highway-amber: #d97706;
+  --highway-green: #10b981;
+  --highway-red: #ef4444;
+  --express-purple: #a855f7;
+  --freight-amber: #f97316;
+  --ev-emerald: #10b981;
+  --brt-yellow: #eab308;
+  --autobahn-cyan: #06b6d4;
+  --cyber-cyan: #06b6d4;
+  --rage-crimson: #dc2626;
+  --ad-gold: #facc15;
+  --wildlife-green: #10b981;
+  --sleepy-blue: #60a5fa;
+  --legendary-gold: #fbbf24;
+  --rare-blue: #3b82f6;
+  --uncommon-green: #10b981;
+  --common-gray: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #e2e8f0;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast.info { background: rgba(37, 99, 235, 0.95); border-left: 5px solid #60a5fa; }
+.toast.success { background: rgba(16, 185, 129, 0.95); border-left: 5px solid #34d399; }
+.toast.warning { background: rgba(245, 158, 11, 0.95); color: #111; border-left: 5px solid #fbbf24; }
+.toast.danger { background: rgba(239, 68, 68, 0.95); border-left: 5px solid #f87171; }
+.toast.rage { background: rgba(220, 38, 38, 0.95); border-left: 5px solid #fbbf24; box-shadow: 0 0 16px rgba(220, 38, 38, 0.8); }
+.toast.boss { background: rgba(220, 38, 38, 0.98); border-left: 5px solid #fbbf24; box-shadow: 0 0 16px rgba(220, 38, 38, 0.7); }
+.toast.ad { background: rgba(234, 179, 8, 0.95); color: #0f172a; border-left: 5px solid #ca8a04; }
+.toast.wildlife { background: rgba(5, 150, 105, 0.95); border-left: 5px solid #6ee7b7; }
+.toast.sleepy { background: rgba(79, 70, 229, 0.95); border-left: 5px solid #a5b4fc; }
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Seamless Infinite News Ticker */
+.news-ticker-container {
+  background: #06090e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 32px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.news-label {
+  background: var(--highway-yellow);
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.72rem;
+  padding: 0 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+
+.news-content {
+  white-space: nowrap;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  display: inline-block;
+  animation: tickerMarquee 140s linear infinite;
+}
+
+.news-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tickerMarquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Header & Stat Cards */
+.game-header {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--panel-border);
+  padding: 10px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.text-white { color: #ffffff !important; }
+.text-muted { color: #94a3b8 !important; }
+.text-amber { color: #f59e0b !important; }
+.text-cyan { color: #06b6d4 !important; }
+.text-danger { color: #ef4444 !important; }
+.text-success { color: #10b981 !important; }
+.text-purple { color: #a855f7 !important; }
+.text-ad { color: #facc15 !important; }
+
+.stat-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--highway-yellow);
+  transform: translateY(-1px);
+}
+
+.stat-card.ante-card {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.stat-card.bank-card {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.stat-card.ad-card {
+  border-color: rgba(250, 204, 21, 0.4);
+  background: rgba(250, 204, 21, 0.08);
+}
+
+/* Stage Indicator Badges (Balatro-style) */
+.stage-tracker-container {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  color: #64748b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.stage-badge.active {
+  background: var(--highway-yellow);
+  color: #0f172a;
+  border-color: var(--highway-yellow);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  transform: scale(1.05);
+}
+
+.stage-badge.boss-badge.active {
+  background: var(--rage-crimson);
+  color: #fff;
+  border-color: #f87171;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.8);
+  animation: pulseBoss 1.5s infinite alternate;
+}
+
+.stage-badge.cleared {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+@keyframes pulseBoss {
+  from { box-shadow: 0 0 8px rgba(220, 38, 38, 0.5); }
+  to { box-shadow: 0 0 18px rgba(239, 68, 68, 1.0); }
+}
+
+/* Main Container & Boxes */
+.main-container {
+  padding: 16px;
+}
+
+.game-box {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Canvas Viewport */
+.canvas-container {
+  background: #090d16;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 24px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+#highwayCanvas {
+  display: block;
+  width: 100%;
+  height: 400px;
+  cursor: crosshair;
+}
+
+/* HUD Overlay on Canvas */
+.canvas-hud-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hud-pill {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  pointer-events: auto;
+}
+
+.hud-pill.boss-warning {
+  background: rgba(185, 28, 28, 0.9);
+  border-color: #f87171;
+  color: #fff;
+  animation: pulseGlow 1s infinite alternate;
+}
+
+.hud-pill.ad-income-pill {
+  background: rgba(202, 138, 4, 0.9);
+  border-color: #fde047;
+  color: #0f172a;
+}
+
+.hud-pill.rage-pill {
+  background: rgba(185, 28, 28, 0.85);
+  border-color: #f87171;
+  color: #fff;
+}
+
+.hud-pill.pattern-pill {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* Balatro-Style Commuter Target Tracker Gauge */
+.commuter-target-container {
+  margin-top: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.commuter-target-bar-wrapper {
+  height: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.5);
+  margin-top: 6px;
+}
+
+.commuter-target-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 60%, #10b981 100%);
+  border-radius: 9px;
+  transition: width 0.25s ease;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+}
+
+.commuter-target-fill.quota-met {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.9);
+}
+
+/* Traffic Laws (Balatro Joker Equivalent) Tray */
+.laws-tray {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+  min-height: 90px;
+}
+
+.law-badge {
+  background: linear-gradient(145deg, #18233c, #0f172a);
+  border: 2px solid var(--common-gray);
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 140px;
+  max-width: 180px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.law-badge:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  z-index: 5;
+}
+
+.law-badge.common { border-color: var(--common-gray); }
+.law-badge.uncommon { border-color: var(--uncommon-green); box-shadow: 0 0 8px rgba(16, 185, 129, 0.25); }
+.law-badge.rare { border-color: var(--rare-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.35); }
+.law-badge.legendary { border-color: var(--legendary-gold); box-shadow: 0 0 14px rgba(251, 191, 36, 0.55); }
+
+.law-badge .law-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.law-badge .law-desc {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+/* Modals */
+.modal.is-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  max-width: 780px;
+  width: 95%;
+  overflow: hidden;
+}
+
+.modal-card-head {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 24px;
+}
+
+.modal-card-body {
+  background: rgba(10, 14, 23, 0.95);
+  padding: 24px;
+}
+
+.modal-card-foot {
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 24px;
+}
+
+.draft-cards-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0 20px;
+}
+
+.draft-card {
+  background: linear-gradient(145deg, #162035, #0f172a);
+  border: 2px solid var(--common-gray);
+  border-radius: 12px;
+  padding: 16px;
+  width: 215px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.draft-card:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+/* Starter Procurement Menu (Pick 2 of 6 at game start) */
+.starter-category-col {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.starter-category-header {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.starter-card {
+  background: linear-gradient(145deg, #162035, #0f172a);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 145px;
+}
+
+.starter-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.starter-card.is-selected {
+  border-color: #10b981;
+  background: linear-gradient(145deg, #064e3b, #0f172a);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.6);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.starter-card .select-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.starter-card.is-selected .select-badge {
+  background: #10b981;
+  color: #fff;
+}
+
+.starter-card .starter-icon {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.starter-card .starter-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.starter-card .starter-desc {
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  line-height: 1.3;
+}
+
+/* Balatro-Style Post-Commute Shop */
+.shop-section-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.shop-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.shop-item-card {
+  background: linear-gradient(145deg, #162035, #0f172a);
+  border: 2px solid var(--common-gray);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.shop-item-card:hover:not(.is-sold) {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.7);
+}
+
+.shop-item-card.common { border-color: var(--common-gray); }
+.shop-item-card.uncommon { border-color: var(--uncommon-green); box-shadow: 0 0 10px rgba(16, 185, 129, 0.25); }
+.shop-item-card.rare { border-color: var(--rare-blue); box-shadow: 0 0 12px rgba(59, 130, 246, 0.35); }
+.shop-item-card.legendary { border-color: var(--legendary-gold); box-shadow: 0 0 16px rgba(251, 191, 36, 0.5); }
+.shop-item-card.infra-card { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.25); }
+.shop-item-card.contract-card { border-color: var(--ad-gold); box-shadow: 0 0 10px rgba(250, 204, 21, 0.25); }
+
+.shop-item-card.is-sold {
+  opacity: 0.35;
+  filter: grayscale(0.8);
+  pointer-events: none;
+}
+
+.shop-item-card .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.shop-item-card .item-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.shop-item-card .item-price {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid #10b981;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.shop-item-card .item-icon {
+  font-size: 2rem;
+  text-align: center;
+  margin: 6px 0;
+}
+
+.shop-item-card .item-name {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.shop-item-card .item-desc {
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  text-align: center;
+  line-height: 1.35;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.shop-expansion-card {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border: 2px dashed rgba(59, 130, 246, 0.5);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+}
+
+.draft-card.common { border-color: var(--common-gray); }
+.draft-card.uncommon { border-color: var(--uncommon-green); box-shadow: 0 0 14px rgba(16, 185, 129, 0.3); }
+.draft-card.rare { border-color: var(--rare-blue); box-shadow: 0 0 18px rgba(59, 130, 246, 0.4); }
+.draft-card.legendary { border-color: var(--legendary-gold); box-shadow: 0 0 22px rgba(251, 191, 36, 0.6); }
+
+.draft-card .card-rarity {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.draft-card.common .card-rarity { color: var(--common-gray); }
+.draft-card.uncommon .card-rarity { color: var(--uncommon-green); }
+.draft-card.rare .card-rarity { color: var(--rare-blue); }
+.draft-card.legendary .card-rarity { color: var(--legendary-gold); }
+
+.draft-card .card-icon {
+  font-size: 2.3rem;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.draft-card .card-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.draft-card .card-desc {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  text-align: center;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  flex-grow: 1;
+}
+
+/* Lane Construction Modal Cards */
+.lane-build-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.lane-build-card {
+  background: linear-gradient(145deg, #18233c, #0f172a);
+  border: 2px solid #475569;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lane-build-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--highway-yellow);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.lane-build-card.type-standard { border-left: 5px solid #64748b; }
+.lane-build-card.type-express { border-left: 5px solid var(--express-purple); }
+.lane-build-card.type-freight { border-left: 5px solid var(--freight-amber); }
+.lane-build-card.type-ev { border-left: 5px solid var(--ev-emerald); }
+.lane-build-card.type-brt { border-left: 5px solid var(--brt-yellow); }
+.lane-build-card.type-autobahn { border-left: 5px solid var(--autobahn-cyan); }
+
+/* Auto-Toll RFID Gantry Speed Card */
+.gantry-speed-card {
+  background: linear-gradient(145deg, #18233c, #0f172a);
+  border: 2px solid #38bdf8;
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
+}
+
+/* Buttons */
+.button.is-rush-hour {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border: none;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+  transition: all 0.2s ease;
+}
+
+.button.is-rush-hour:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+}
+
+.button.is-rush-hour.is-active-skill {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  animation: pulseGlow 1s infinite alternate;
+}
+
+.button.is-start-commute {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.1rem;
+  border: none;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.button.is-start-commute:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.6);
+}
+
+.button.is-highway {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.button.is-highway:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+}
+
+.button.is-ad-btn {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  color: #0f172a;
+  font-weight: 800;
+  border: none;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+  transition: all 0.2s ease;
+}
+
+.button.is-ad-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(234, 179, 8, 0.55);
+}
+
+/* Shop Cards & Lane Cards */
+.shop-card, .lane-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+
+.shop-card:hover, .lane-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.shop-card.ad-contract {
+  border-left: 4px solid var(--ad-gold);
+  background: rgba(250, 204, 21, 0.06);
+}
+
+/* Distinct Lane Types Styles */
+.lane-card.lane-type-standard {
+  border-left: 4px solid #64748b;
+}
+
+.lane-card.lane-type-express {
+  border-left: 4px solid var(--express-purple);
+  background: rgba(168, 85, 247, 0.08);
+}
+
+.lane-card.lane-type-freight {
+  border-left: 4px solid var(--freight-amber);
+  background: rgba(249, 115, 22, 0.08);
+}
+
+.lane-card.lane-type-ev {
+  border-left: 4px solid var(--ev-emerald);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.lane-card.lane-type-brt {
+  border-left: 4px solid var(--brt-yellow);
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.lane-card.lane-type-autobahn {
+  border-left: 4px solid var(--autobahn-cyan);
+  background: rgba(6, 182, 212, 0.08);
+}
+
+.lane-card.is-debuffed {
+  border-left: 5px solid var(--highway-red) !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+.lane-card.breakdown {
+  border-left: 4px solid var(--highway-red) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+.tag.is-lane-express { background: var(--express-purple); color: #fff; font-weight: 800; }
+.tag.is-lane-freight { background: var(--freight-amber); color: #fff; font-weight: 800; }
+.tag.is-lane-ev { background: var(--ev-emerald); color: #fff; font-weight: 800; }
+.tag.is-lane-brt { background: var(--brt-yellow); color: #0f172a; font-weight: 800; }
+.tag.is-lane-autobahn { background: var(--autobahn-cyan); color: #0f172a; font-weight: 800; }
+.tag.is-lane-standard { background: #475569; color: #fff; font-weight: 700; }
+
+.tag.is-debuffed-tag {
+  background: var(--highway-red);
+  color: #fff;
+  font-weight: 900;
+  animation: pulseGlow 1.2s infinite alternate;
+}
+
+.tag.is-ad-tag {
+  background: var(--ad-gold);
+  color: #0f172a;
+  font-weight: 800;
+}
+
+/* Tabs Styling */
+.tabs.is-boxed a {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: transparent;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.tabs.is-boxed li.is-active a {
+  background: var(--panel-bg);
+  border-color: var(--panel-border) var(--panel-border) transparent;
+  color: var(--highway-yellow);
+}
+
+/* Score Breakdown Table */
+.summary-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+}
+
+.summary-grade-badge {
+  font-size: 3rem;
+  font-weight: 900;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.grade-s { color: var(--legendary-gold); text-shadow: 0 0 20px rgba(251, 191, 36, 0.6); }
+.grade-a { color: var(--highway-green); text-shadow: 0 0 16px rgba(16, 185, 129, 0.5); }
+.grade-b { color: var(--cyber-cyan); }
+.grade-c { color: var(--highway-yellow); }
+.grade-f { color: var(--highway-red); }
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); }
+  to { box-shadow: 0 0 20px rgba(239, 68, 68, 1.0); }
+}

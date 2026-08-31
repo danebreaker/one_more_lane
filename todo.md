@@ -1,12 +1,25 @@
-# TODO:
+# TODO List & Roguelike Roadmap
 
-- +10 / +100
-- Multiple Highways per planet
-- Multiple Planets
-- Money balancing
-- Visuals
-- Express lane
-- Persistence through local storage
-- Systems Messages
-  - Type (Success, Failure, Error)
-  - Message
+- [x] Balatro Equivalence Documentation & Design Notes (Car = Card, Lane = Hand, Traffic Law = Joker, Lane Upgrade = Planet Card, Billboards = Money-Making Pool)
+- [x] Matching vehicle bonus rule for specialized lanes (Premium bonuses trigger when matching car type clears toll)
+- [x] Game Start Starter Procurement Menu (Pick 2 of 6 perks across Traffic Laws, Lane/Toll Upgrades, and Billboards/Ads)
+- [x] Strict Upgrade Isolation: Upgrades, lane purchases, billboards, contracts, and laws can ONLY be bought inside the Post-Commute Shop
+- [x] Shop exclusively opens after completing a 24-hour commute (Debrief payout -> "Continue to Shop")
+- [x] Balatro-Style Post-Commute Transit Shop after each 24-Hour Commute
+- [x] Shop Slot 1 & 2: Exactly 2 Traffic Law Options (Jokers) with rarity-based pricing
+- [x] Shop Slot 3 & 4: Exactly 2 Infrastructure & Upgrade slots (Auto-Toll Gantry speed, Billboards, Corporate Ad Contracts, Nitro Boosters, Golden Transponders, Pavement Shields, Grant Vouchers)
+- [x] Permanent Highway Expansion (Extra Lane Buy) integrated directly into the Shop
+- [x] Shop Reroll functionality ($5 base + scaling) with instant inventory regeneration
+- [x] Deer Crossing: Exactly 5% probability check at the top of every in-game hour
+- [x] Deer Safe Passage Eco Bounty decreased to $10 base (+$25 with Wildlife Accord)
+- [x] Sleepy driver probability reduced to rare occurrences (~5% late night, ~1.5% day)
+- [x] Road Rager calming de-escalation bounty decreased to $5 base
+- [x] All base toll values set to $1 with proportional multipliers (Standard $1, Express $3, Freight $2 base with 5x commercial multiplier, EV $2, BRT $2)
+- [x] Autobahn Lane: $0 Toll value (Free high-speed flow) designed purely for maximizing commuter throughput
+- [x] Speeder spawn probability decreased (~3.5% base chance) and click fine set to $5 base (upgradeable via Surveillance Precision meta grants)
+- [x] Strict Anti-Overlap Vehicle Physics & Bumper Clamping (Zero visual overlaps on road, entrances, or gantry queues)
+- [x] Slower 24-Hour Day progression (~85s per day) with 1x, 2x, 3x simulation speed toggles
+- [x] Default Auto-Tolling on all lanes (Removed manual clicking tolls)
+- [x] Upgradeable Gantry Processing Speed Tiers (Mechanical Gate 1.8s -> Standard RFID 1.1s -> Laser Scanner 0.6s -> Open-Road ALPR 0.2s -> Quantum Fly-Through 0.0s)
+- [x] Balatro-Style Lane Specialization Debuff Boss Blinds (Express Outage, Freight Scale, EMP Grid Surge, Transit Strike, Radar Trap, Pothole Plague)
+- [x] Save & Persistence via LocalStorage with export/import code support
